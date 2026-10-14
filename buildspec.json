@@ -33,13 +33,13 @@
     },
     "platformConfig": {
         "macos": {
-            "bundleId": "com.example.plugintemplate-for-obs"
+            "bundleId": "com.urmamge.obs-spotify-now-playing"
         }
     },
-    "name": "plugintemplate-for-obs",
-    "displayName": "Plugin Template for OBS",
+    "name": "obs-spotify-now-playing",
+    "displayName": "Spotify Now Playing",
     "version": "1.0.0",
-    "author": "Your Name Here",
-    "website": "https://example.com",
-    "email": "me@example.com"
+    "author": "urmamge",
+    "website": "https://github.com/urmamge/obs-spotify-now-playing",
+    "email": "urmamge@users.noreply.github.com"
 }

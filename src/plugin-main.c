@@ -1,6 +1,6 @@
 /*
-Plugin Name
-Copyright (C) <Year> <Developer> <Email Address>
+Spotify Now Playing for OBS
+Copyright (C) 2026 urmamge
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -22,13 +22,18 @@ with this program. If not, see <https://www.gnu.org/licenses/>
 OBS_DECLARE_MODULE()
 OBS_MODULE_USE_DEFAULT_LOCALE(PLUGIN_NAME, "en-US")
 
+extern void now_playing_load(void);
+extern void now_playing_unload(void);
+
 bool obs_module_load(void)
 {
+	now_playing_load();
 	obs_log(LOG_INFO, "plugin loaded successfully (version %s)", PLUGIN_VERSION);
 	return true;
 }
 
 void obs_module_unload(void)
 {
+	now_playing_unload();
 	obs_log(LOG_INFO, "plugin unloaded");
 }

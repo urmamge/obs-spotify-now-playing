@@ -34,6 +34,13 @@ if(ENABLE_QT)
   )
 endif()
 
-target_sources(${CMAKE_PROJECT_NAME} PRIVATE src/plugin-main.c)
+if(NOT WIN32)
+  message(FATAL_ERROR "${_name} only supports Windows (it reads Windows media session data).")
+endif()
+
+target_sources(${CMAKE_PROJECT_NAME} PRIVATE src/plugin-main.c src/now-playing.cpp)
+target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE windowsapp gdiplus shcore)
+set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES CXX_STANDARD 20)
+target_compile_options(${CMAKE_PROJECT_NAME} PRIVATE $<$<COMPILE_LANGUAGE:CXX>:/Zc:char8_t- /bigobj>)
 
 set_target_properties_plugin(${CMAKE_PROJECT_NAME} PROPERTIES OUTPUT_NAME ${_name})

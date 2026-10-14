@@ -1,59 +1,35 @@
-# OBS Plugin Template
+# Spotify Now Playing for OBS
 
-## Introduction
+An OBS Studio source (Windows only) that shows the song currently playing in Spotify, styled after the now-playing corner of the Spotify desktop player bar: rounded album art, the title in white and the artist in grey on a black background.
 
-The plugin template is meant to be used as a starting point for OBS Studio plugin development. It includes:
+Song info and album art come from Windows' media controls (the same data as the volume flyout), so there's no Spotify login or API key.
 
-* Boilerplate plugin source code
-* A CMake project file
-* GitHub Actions workflows and repository actions
+## Install
 
-## Supported Build Environments
+1. Download the `windows-x64` zip from the latest build on the **Actions** tab (or a release).
+2. Close OBS.
+3. Extract the zip into `C:\ProgramData\obs-studio\plugins\` so you end up with `C:\ProgramData\obs-studio\plugins\obs-spotify-now-playing\bin\64bit\obs-spotify-now-playing.dll`.
+4. Start OBS and add a **Spotify Now Playing** source.
 
-| Platform  | Tool   |
-|-----------|--------|
-| Windows   | Visual Studio 17 2022 |
-| macOS     | XCode 16.0 |
-| Windows, macOS  | CMake 3.30.5 |
-| Ubuntu 24.04 | CMake 3.28.3 |
-| Ubuntu 24.04 | `ninja-build` |
-| Ubuntu 24.04 | `pkg-config`
-| Ubuntu 24.04 | `build-essential` |
+## Settings
 
-## Quick Start
+| Setting | Default | Notes |
+|---|---|---|
+| Width | 384 | Width of the bar in 1x units; long titles are cut off with an ellipsis |
+| Scale | 1.0 | Renders at this multiple, so text stays sharp when the bar is large |
+| Title font / size / colour | Segoe UI Semibold, 15 px, white | |
+| Artist font / size / colour | Segoe UI Semibold, 13 px, #B3B3B3 | |
+| Background colour | Black, opaque | Supports transparency |
+| Background corner radius | 0 | |
+| Album art corner radius | 4 | |
+| Hide when paused | Off | |
+| Hide when Spotify isn't running | On | |
 
-An absolute bare-bones [Quick Start Guide](https://github.com/obsproject/obs-plugintemplate/wiki/Quick-Start-Guide) is available in the wiki.
+## Building
 
-## Documentation
+GitHub Actions builds the plugin on every push to `main` (see `.github/workflows`). To build locally you need Visual Studio 2022 with the C++ workload and CMake 3.28+:
 
-All documentation can be found in the [Plugin Template Wiki](https://github.com/obsproject/obs-plugintemplate/wiki).
-
-Suggested reading to get up and running:
-
-* [Getting started](https://github.com/obsproject/obs-plugintemplate/wiki/Getting-Started)
-* [Build system requirements](https://github.com/obsproject/obs-plugintemplate/wiki/Build-System-Requirements)
-* [Build system options](https://github.com/obsproject/obs-plugintemplate/wiki/CMake-Build-System-Options)
-
-## GitHub Actions & CI
-
-Default GitHub Actions workflows are available for the following repository actions:
-
-* `push`: Run for commits or tags pushed to `master` or `main` branches.
-* `pr-pull`: Run when a Pull Request has been pushed or synchronized.
-* `dispatch`: Run when triggered by the workflow dispatch in GitHub's user interface.
-* `build-project`: Builds the actual project and is triggered by other workflows.
-* `check-format`: Checks CMake and plugin source code formatting and is triggered by other workflows.
-
-The workflows make use of GitHub repository actions (contained in `.github/actions`) and build scripts (contained in `.github/scripts`) which are not needed for local development, but might need to be adjusted if additional/different steps are required to build the plugin.
-
-### Retrieving build artifacts
-
-Successful builds on GitHub Actions will produce build artifacts that can be downloaded for testing. These artifacts are commonly simple archives and will not contain package installers or installation programs.
-
-### Building a Release
-
-To create a release, an appropriately named tag needs to be pushed to the `main`/`master` branch using semantic versioning (e.g., `12.3.4`, `23.4.5-beta2`). A draft release will be created on the associated repository with generated installer packages or installation programs attached as release artifacts.
-
-## Signing and Notarizing on macOS
-
-Basic concepts of codesigning and notarization on macOS are explained in the correspodning [Wiki article](https://github.com/obsproject/obs-plugintemplate/wiki/Codesigning-On-macOS) which has a specific section for the [GitHub Actions setup](https://github.com/obsproject/obs-plugintemplate/wiki/Codesigning-On-macOS#setting-up-code-signing-for-github-actions).
+```powershell
+cmake --preset windows-x64
+cmake --build --preset windows-x64
+```
